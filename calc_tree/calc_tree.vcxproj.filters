@@ -18,6 +18,9 @@
     <ClInclude Include="elem.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="elem.cpp">
