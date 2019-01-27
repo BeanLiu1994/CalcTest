@@ -1,8 +1,8 @@
 #include "elem.h"
 #include <variant>
 #include <iostream>
-#include <vld.h>
-
+//#include <vld.h>
+#pragma region BasicTypes
 using namespace std;
 struct Op
 {
@@ -16,7 +16,7 @@ struct Node
 	Node(shared_ptr<Op> in) : SomeOp(in), flag(0), val(NAN){}
 
 	// Before build;
-	const shared_ptr<Op> SomeOp = nullptr;
+	shared_ptr<Op> SomeOp = nullptr;
 
 	// After build;
 	inline Ty Evaluate() const
@@ -81,7 +81,9 @@ struct BinaryOp :Op
 
 	inline virtual Ty Evaluate(const Ty&, const Ty&) const = 0;
 };
+#pragma endregion
 
+#pragma region COMMON_OPERATION
 template<typename T1, typename T2>
 struct Plus :BinaryOp
 {
@@ -157,11 +159,50 @@ Node operator/(T1&& n1, T2&& n2)
 		(forward< T1 && >(n1), forward< T2 && >(n2)));
 }
 template<typename T>
-Node operator~(T&& in)
+Node abs(T&& in)
 {
 	return Node(std::make_shared<Abs<decltype(in)>>
 		(forward<T&&>(in)));
 }
+#pragma endregion
+
+#pragma region GUIDE_FOR_ADD_AN_OPERATION
+// To add a unary operation
+template<typename T>
+struct CustomUnaryOp :UnaryOp
+{
+	CustomUnaryOp(T&& in) :UnaryOp(forward<T&&>(in)) {}
+	inline Ty Evaluate(const Ty& v) const override
+	{
+		// TO DO: fill in your custom evaluation.
+		return v;
+	}
+};
+template<typename T>
+Node func_unary(T&& in)
+{
+	return Node(std::make_shared<CustomUnaryOp<decltype(in)>>
+		(forward<T&&>(in)));
+}
+
+// To add a binary operation
+template<typename T1, typename T2>
+struct CustomBinaryOp :BinaryOp
+{
+	CustomBinaryOp(T1 && n1, T2 && n2) :BinaryOp(forward< T1 && >(n1), forward< T2 && >(n2)) {}
+	inline Ty Evaluate(const Ty& v1, const Ty& v2) const override
+	{
+		// TO DO: fill in your custom evaluation.
+		return v1 & v2;
+	}
+};
+template<typename T1, typename T2>
+Node func_binary(T1&& n1, T2&& n2)
+{
+	return Node(std::make_shared<CustomBinaryOp<decltype(n1), decltype(n2)>>
+		(forward< T1 && >(n1), forward< T2 && >(n2)));
+}
+#pragma endregion
 
 
 int main()
@@ -171,8 +212,10 @@ int main()
 	auto ret2 = a * b;
 	auto ret3 = a - b;
 	auto ret4 = a / b;
-	auto ret5 = ~b;
+	auto ret5 = abs(b);
 	auto ret6 = a + 7;
+
+	b.ChangeVal(10);
 
 	cout << ret1.Evaluate() << endl;
 	cout << ret2.Evaluate() << endl;
