@@ -1,12 +1,7 @@
 language:cpp
-dist: xenial
+
 compiler:
 - gcc
-os:
-- linux
-git:
-  depth: 1
-  quiet: true
 
 script:
 - mkdir build && cd build
