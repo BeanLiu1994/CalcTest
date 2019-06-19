@@ -1,4 +1,8 @@
-language:cpp
+language: cpp
+dist: xenial
+
+os:
+- linux
 
 compiler:
 - gcc
