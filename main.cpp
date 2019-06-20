@@ -63,6 +63,24 @@ void test_combine()
 
 	std::cout << "test_combine passed." << std::endl;
 }
+
+void test_extVar()
+{
+	Var<double> x;
+	ExtVar<double, 0> a;
+	ExtVar<double, 1> b;
+	auto c = abs(-x) + x / 4.0 * x + 3.0 + a - b;
+
+	setVar<decltype(a)>(100);
+
+	setVar<decltype(b)>(100);
+	assert(c(x_val) == abs(-x_val) + x_val / 4.0 * x_val + 3.0 + a() - b());
+
+	b.setVal(200);
+	assert(c(x_val) == abs(-x_val) + x_val / 4.0 * x_val + 3.0 + a() - b());
+
+	std::cout << "test_extVar passed." << std::endl;
+}
 #endif
 
 void diy()
@@ -74,8 +92,16 @@ void diy()
 
 
 	Var<double> x;
-	auto c = abs(-x) + x / 4.0 * x + 3.0;
+	ExtVar<double, 0> a;
+	ExtVar<double, 1> b;
+	auto c = abs(-x) + x / 4.0 * x + 3.0 + a - b;
+	auto d = c + c - c;
 
+	setVar<decltype(a)>(100);
+	setVar<decltype(b)>(100);
+
+	std::cout << c(4) << std::endl;
+	b.setVal(200);
 	std::cout << c(4) << std::endl;
 
 
@@ -88,6 +114,7 @@ int main()
 	test_binary();
 	test_unary();
 	test_combine();
+	test_extVar();
 	std::cout << "program ended." << std::endl;
 #else
 	diy();
