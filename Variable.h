@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 template<typename Scalar_type>
 class Var
 {

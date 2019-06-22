@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Variable.h"
 #include <utility>
+#include "Variable.h"
 // traits
 #include <type_traits>
 
