@@ -23,6 +23,31 @@ private:
 	value_type value;
 };
 
+template<typename Scalar_type, typename condition>
+class ConditionalConst
+{
+public:
+	typedef condition condition_type;
+	typedef Scalar_type value_type;
+
+	ConditionalConst(value_type d, condition_type&& c) 
+		:value(d), _c(std::forward<condition_type>(c)) {}
+	inline value_type operator()(value_type in) 
+	{
+		if(_c(in) != 0) 
+			return value;
+		else
+		{
+			std::cerr << "Error on condition check: condition failed. condition typename: " << typeid(_c).name() << std::endl;
+			throw std::runtime_error("condition failed.");
+		}
+	}
+
+private:
+	value_type value;
+	condition_type _c;
+};
+
 
 // 区分变量的思路，并且预计将const使用这种类型来表示，后续也许可以通过类型检测来进行表达式简化？
 

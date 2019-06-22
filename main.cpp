@@ -104,7 +104,8 @@ void diy()
 	b.setVal(200);
 	std::cout << c(4) << std::endl;
 
-
+	auto r8 = x / x;
+	r8(0.0);
 }
 
 int main()

@@ -79,7 +79,9 @@ inline auto operator-(Ty_l&& l, Ty_r&& r)
 }
 
 template<typename Ty_same>
-inline typename _get_value_type<Ty_same>::type operator-(Ty_same&& l, Ty_same&& r)
+inline 
+typename _gen_non_value_type<typename _get_value_type<Ty_same>::type>::type 
+operator-(Ty_same&& l, Ty_same&& r)
 {
 	return 0;
 }
@@ -124,8 +126,7 @@ inline auto operator/(Ty_l&& l, Ty_r&& r)
 }
 
 template<typename Ty_same>
-inline typename _get_value_type<Ty_same>::type operator/(Ty_same&& l, Ty_same&& r)
+inline auto operator/(Ty_same&& l, Ty_same&& r)
 {
-	assert(r() != 0);
-	return 1;
+	return ConditionalConst<typename _get_value_type<Ty_same>::type, Ty_same>(1, r);
 }
