@@ -3,6 +3,7 @@
 #include <utility>
 #include <iostream>
 #include <exception>
+#include <typeinfo>
 
 template<typename Scalar_type>
 class Var

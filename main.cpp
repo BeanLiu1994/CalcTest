@@ -105,7 +105,7 @@ void diy()
 	std::cout << c(4) << std::endl;
 
 	auto r8 = x / x;
-	r8(0.0);
+	r8(9.0);
 }
 
 int main()
