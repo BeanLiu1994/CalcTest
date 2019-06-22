@@ -95,7 +95,7 @@ void diy()
 	ExtVar<double, 0> a;
 	ExtVar<double, 1> b;
 	auto c = abs(-x) + x / 4.0 * x + 3.0 + a - b;
-	auto d = c + c - c;
+	auto d = c - c + x;
 
 	setVar<decltype(a)>(100);
 	setVar<decltype(b)>(100);

@@ -78,6 +78,12 @@ inline auto operator-(Ty_l&& l, Ty_r&& r)
 	return BinaryExp<Ty_l, Ty_r, Minus>(std::forward<Ty_l>(l), std::forward<Ty_r>(r));
 }
 
+template<typename Ty_same>
+inline typename _get_value_type<Ty_same>::type operator-(Ty_same&& l, Ty_same&& r)
+{
+	return 0;
+}
+
 
 
 template<typename _value_type>
@@ -115,4 +121,11 @@ template<typename Ty_l, typename Ty_r>
 inline auto operator/(Ty_l&& l, Ty_r&& r)
 {
 	return BinaryExp<Ty_l, Ty_r, Divide>(std::forward<Ty_l>(l), std::forward<Ty_r>(r));
+}
+
+template<typename Ty_same>
+inline typename _get_value_type<Ty_same>::type operator/(Ty_same&& l, Ty_same&& r)
+{
+	assert(r() != 0);
+	return 1;
 }
