@@ -1,6 +1,9 @@
 #pragma once
 
 #include <utility>
+#include <iostream>
+#include <exception>
+
 template<typename Scalar_type>
 class Var
 {
